@@ -2,7 +2,7 @@
 common: &common
   client_id: "sushi_sink_rb"
   log_level: debug
-  security_protocol: ssl
+  #security_protocol: ssl
   
 
 development:
