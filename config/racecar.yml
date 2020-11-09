@@ -1,7 +1,7 @@
 # These config values will be shared by all environments but can be overridden.
 common: &common
   client_id: "sushi_sink_rb"
-  log_level: "debug"
+  log_level: debug
 
 development:
   <<: *common
