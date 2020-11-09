@@ -1,28 +1,20 @@
 # These config values will be shared by all environments but can be overridden.
 common: &common
-  client_id: "sushi_sink_rb_v2"
-  log_level: debug
-  #security_protocol: ssl
-  
+  client_id: "sushi_sink_rb"
 
 development:
   <<: *common
   brokers:
-    - ec2-54-86-66-15.compute-1.amazonaws.com:9096
-    - ec2-54-221-245-252.compute-1.amazonaws.com:9096
-    - ec2-34-193-50-177.compute-1.amazonaws.com:9096
+    - localhost:9092
 
 test:
   <<: *common
   brokers:
-    - ec2-54-86-66-15.compute-1.amazonaws.com:9096
-    - ec2-54-221-245-252.compute-1.amazonaws.com:9096
-    - ec2-34-193-50-177.compute-1.amazonaws.com:9096
+    - localhost:9092
 
 production:
   <<: *common
-  log_level: debug
   brokers:
-    - ec2-54-86-66-15.compute-1.amazonaws.com:9096
-    - ec2-54-221-245-252.compute-1.amazonaws.com:9096
     - ec2-34-193-50-177.compute-1.amazonaws.com:9096
+	- ec2-54-221-245-252.compute-1.amazonaws.com:9096
+	- ec2-54-86-66-15.compute-1.amazonaws.com:9096
