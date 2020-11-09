@@ -1,7 +1,10 @@
 class AccountSinkConsumer < Racecar::Consumer
-  subscribes_to "brave_connector_67887\.salesforce\.account"
+  subscribes_to "brave_connector_67887.salesforce.account"
+  
+  puts "starting up"
 
   def process(message)
+    puts "Processing a message!"
     puts "Received message: #{message.value}"
   end
   
