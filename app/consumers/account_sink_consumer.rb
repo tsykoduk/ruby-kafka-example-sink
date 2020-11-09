@@ -12,7 +12,7 @@ class AccountSinkConsumer < Racecar::Consumer
     if data.external_id__c.nil?
       puts "skipping missing External ID"
     else
-      acc = Account.find_or_create_by(eternal_id__c: data.external_id__c)
+      acc = Account.find_or_create_by(external_id__c: data.external_id__c)
       acc.billingcountry = data.billingcountry
       acc.accountsource = data.accountsource
       acc.billingpostalcode = data.billingpostalcode
