@@ -33,6 +33,6 @@ class AccountSink < Racecar::Consumer
     
   rescue JSON::ParserError => e
     puts "Failed to process message in #{message.topic}/#{message.partition} at offset #{message.offset}: #{e}"
-  end
+
   end
 end
