@@ -1,1 +1,1 @@
-accountsink: bundle exec racecar AccountSink
+web: bundle exec puma -C config/puma.rb
