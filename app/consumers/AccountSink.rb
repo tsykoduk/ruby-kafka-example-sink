@@ -5,6 +5,7 @@ class AccountSink < Racecar::Consumer
     puts "Processing message: #{message.value}"
     data = JSON.parse(message.value)
     puts data
+    puts "hello, is this working?"
 
   end
 end
