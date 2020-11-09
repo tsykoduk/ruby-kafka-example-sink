@@ -6,29 +6,29 @@ class AccountSinkConsumer < Racecar::Consumer
   def process(message)
     puts "Processing a message!"
     puts "Received message: #{message.value}"
-  end
   
-  data = JSON.parse(message.value)
+    data = JSON.parse(message.value)
   
-  if data.external_id__c.nil?
-    puts "skipping missing External ID"
-  else
-    acc = Account.find_or_create_by(eternal_id__c: data.external_id__c)
-    acc.billingcountry = data.billingcountry
-    acc.accountsource = data.accountsource
-    acc.billingpostalcode = data.billingpostalcode
-    acc.billingcity = data.billingpostalcode
-    acc.billingstate = data.billingstate
-    acc.description = data.description
-    acc.billinglatitude = data.billinglatitude
-    acc.website = data.website
-    acc.phone = data.website
-    acc.fax = data.fax
-    acc.billingstreet = data.fax
-    acc.name = data.name
-    acc.billinglongitude = data.billinglongitude
-    acc.save
-    puts "saved account " + acc.name
+    if data.external_id__c.nil?
+      puts "skipping missing External ID"
+    else
+      acc = Account.find_or_create_by(eternal_id__c: data.external_id__c)
+      acc.billingcountry = data.billingcountry
+      acc.accountsource = data.accountsource
+      acc.billingpostalcode = data.billingpostalcode
+      acc.billingcity = data.billingpostalcode
+      acc.billingstate = data.billingstate
+      acc.description = data.description
+      acc.billinglatitude = data.billinglatitude
+      acc.website = data.website
+      acc.phone = data.website
+      acc.fax = data.fax
+      acc.billingstreet = data.fax
+      acc.name = data.name
+      acc.billinglongitude = data.billinglongitude
+      acc.save
+      puts "saved account " + acc.name
+    end
   end
   
 rescue JSON::ParserError => e
