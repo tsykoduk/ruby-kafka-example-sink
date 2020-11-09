@@ -30,5 +30,9 @@ class AccountSink < Racecar::Consumer
       acc.save
       puts "saved account " + acc.name
     end
+    
+  rescue JSON::ParserError => e
+    puts "Failed to process message in #{message.topic}/#{message.partition} at offset #{message.offset}: #{e}"
+  end
   end
 end
