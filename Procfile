@@ -1,1 +1,1 @@
-accountsink: bundle exec racecar AccountSink
+accountsink: bundle exec racecar AccountSinkConsumer
