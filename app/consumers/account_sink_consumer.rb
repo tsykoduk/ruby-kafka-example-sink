@@ -8,6 +8,8 @@ class AccountSinkConsumer < Racecar::Consumer
     puts "Received message: #{message.value}"
   end
   
+  data = JSON.parse(message.value)
+  
   if data.external_id__c.nil?
     puts "skipping missing External ID"
   else
