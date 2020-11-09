@@ -1,5 +1,5 @@
 class AccountSink < Racecar::Consumer
-  subscribes_to "brave_connector_67887.salesforce.account", start_from_beginning: false
+  subscribes_to "brave_connector_67887\.salesforce\.account", start_from_beginning: false
 
   def initialize
     puts "booting subscriber -- this is just here so I can make sure that the model is starting"
@@ -7,7 +7,7 @@ class AccountSink < Racecar::Consumer
 
   def process(message)
     puts "we got a message!"
-    puts "Processing message: #{message}"
+    puts "Processing message: #{message.value}"
     data = JSON.parse(message.value)
     
     if data.external_id__c.nil?
@@ -28,9 +28,7 @@ class AccountSink < Racecar::Consumer
       acc.name = data.name
       acc.billinglongitude = data.billinglongitude
       acc.save
+      puts "saved account " + acc.name
     end
-      
-      
-
   end
 end
