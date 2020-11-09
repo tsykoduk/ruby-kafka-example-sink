@@ -8,8 +8,14 @@ class AccountSink < Racecar::Consumer
   def process(message)
     puts "Processing message: #{message.value}"
     data = JSON.parse(message.value)
-    puts data
-    puts "hello, is this working?"
+    
+    if data.external_id__c.nil?
+      puts "skipping missing External ID"
+    else
+      acc = Account.find_or_create_by(eternal_id__c: data.external_id__c)
+    end
+      
+      
 
   end
 end
