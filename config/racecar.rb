@@ -10,7 +10,7 @@ tmp_ssl_key.close
 
 Racecar.configure do |config|
   # Each config variable can be set using a writer attribute.
-  config.brokers = ServiceDiscovery.find("ec2-34-193-50-177.compute-1.amazonaws.com:9096,ec2-54-221-245-252.compute-1.amazonaws.com:9096,ec2-54-86-66-15.compute-1.amazonaws.com:9096")
+  config.brokers = "ec2-34-193-50-177.compute-1.amazonaws.com:9096,ec2-54-221-245-252.compute-1.amazonaws.com:9096,ec2-54-86-66-15.compute-1.amazonaws.com:9096"
   group.id = "ruby-test",
   ssl.ca.location = tmp_ca_file.path,
   ssl.certificate.location =tmp_ssl_cert.path,
