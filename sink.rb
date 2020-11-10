@@ -56,7 +56,7 @@ consumer.each do |message|
     acc.name = acc_name
     acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
     acc.external_id__c = data["payload"]["after"]["external_id__c"]
-    acc.save
+    acc.save!
     puts "saved account " + acc.name
   end
 end
