@@ -30,27 +30,28 @@ consumer = Rdkafka::Config.new(config).consumer
 consumer.subscribe("independent_connector_7719.salesforce.account")
 
 consumer.each do |message|
-  puts "Message received: #{message}"
-  
-  data = JSON.parse(message)
+  data = JSON.parse(message.payload)
+  data.to_h
 
-  if data.external_id__c.nil?
+  puts "Message received - processing record #{data["payload"]["after"]["name"]}"
+
+  if data["payload"]["after"]["external_id__c"].nil?
     puts "skipping missing External ID"
   else
-    acc = Account.find_or_create_by(external_id__c: data.external_id__c)
-    acc.billingcountry = data.billingcountry
-    acc.accountsource = data.accountsource
-    acc.billingpostalcode = data.billingpostalcode
-    acc.billingcity = data.billingpostalcode
-    acc.billingstate = data.billingstate
-    acc.description = data.description
-    acc.billinglatitude = data.billinglatitude
-    acc.website = data.website
-    acc.phone = data.website
-    acc.fax = data.fax
-    acc.billingstreet = data.fax
-    acc.name = data.name
-    acc.billinglongitude = data.billinglongitude
+    acc = Account.find_or_create_by(external_id__c: data["payload"]["after"]["external_id__c"])  
+    acc.billingcountry = data["payload"]["after"]["billingcountry"]
+    acc.accountsource = data["payload"]["after"]["accountsource"]
+    acc.billingpostalcode = data["payload"]["after"]["billingpostalcode"]
+    acc.billingcity = data["payload"]["after"]["billingpostalcode"]
+    acc.billingstate = data["payload"]["after"]["billingstate"]
+    acc.description = data["payload"]["after"]["description"]
+    acc.billinglatitude = data["payload"]["after"]["billinglatitude"]
+    acc.website = data["payload"]["after"]["website"]
+    acc.phone = data["payload"]["after"]["phone"]
+    acc.fax = data["payload"]["after"]["fax"]
+    acc.billingstreet = data["payload"]["after"]["billingstreet"]
+    acc.name = data["payload"]["after"]["name"]
+    acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
     acc.save
     puts "saved account " + acc.name
   end

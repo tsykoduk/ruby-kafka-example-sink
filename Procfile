@@ -1,1 +1,1 @@
-accountsink: bundle exec racecar AccountSinkConsumer
+accountsink: bundle exec sink.rb
