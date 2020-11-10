@@ -32,13 +32,16 @@ consumer.subscribe("independent_connector_7719.salesforce.account")
 consumer.each do |message|
   data = JSON.parse(message.payload)
   data.to_h
+  
+  acc_name = data["payload"]["after"]["name"]
+  acc_id = data["payload"]["after"]["external_id__c"]
 
-  puts "Message received - processing record #{data["payload"]["after"]["name"]}"
+  puts "Message received - processing record #{acc_name}"
 
-  if data["payload"]["after"]["external_id__c"].nil?
-    puts "skipping -- missing External ID for record #{data["payload"]["after"]["name"]}"
+  if acc_id == ""
+    puts "skipping -- missing External ID for record #{acc_name}"
   else
-    acc = Account.find_or_create_by(external_id__c: data["payload"]["after"]["external_id__c"])  
+    acc = Account.find_or_create_by(external_id__c: acc_id)  
     acc.billingcountry = data["payload"]["after"]["billingcountry"]
     acc.accountsource = data["payload"]["after"]["accountsource"]
     acc.billingpostalcode = data["payload"]["after"]["billingpostalcode"]
