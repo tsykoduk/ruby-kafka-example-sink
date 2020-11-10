@@ -36,7 +36,7 @@ consumer.each do |message|
   puts "Message received - processing record #{data["payload"]["after"]["name"]}"
 
   if data["payload"]["after"]["external_id__c"].nil?
-    puts "skipping missing External ID"
+    puts "skipping -- missing External ID for record #{data["payload"]["after"]["name"]}"
   else
     acc = Account.find_or_create_by(external_id__c: data["payload"]["after"]["external_id__c"])  
     acc.billingcountry = data["payload"]["after"]["billingcountry"]
@@ -52,6 +52,7 @@ consumer.each do |message|
     acc.billingstreet = data["payload"]["after"]["billingstreet"]
     acc.name = data["payload"]["after"]["name"]
     acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
+    acc.external_id__c = data["payload"]["after"]["external_id__c"]
     acc.save
     puts "saved account " + acc.name
   end
