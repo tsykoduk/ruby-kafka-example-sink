@@ -55,7 +55,7 @@ consumer.each do |message|
     acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
     acc.external_id__c = data["payload"]["after"]["external_id__c"]
     acc.save!
-    puts "saved account " + acc.name
+    puts "saved account " + Account.find_by(external_id__c: acc_id).name
   end
 end
 
