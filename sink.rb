@@ -34,27 +34,26 @@ consumer.each do |message|
   data.to_h
   
   acc_name = data["payload"]["after"]["name"]
-  unless acc_id = data["payload"]["after"]["external_id__c"]
-    acc_id = nil
+  unless data["payload"]["after"]["external_id__c"]
     puts "skipping #{acc_name}"
   else
     puts "Message received - processing record #{acc_name}, id #{acc_id}"
-    acc = Account.find_or_create_by(external_id__c: acc_id)  
-    acc.billingcountry = data["payload"]["after"]["billingcountry"]
-    acc.accountsource = data["payload"]["after"]["accountsource"]
-    acc.billingpostalcode = data["payload"]["after"]["billingpostalcode"]
-    acc.billingcity = data["payload"]["after"]["billingcity"]
-    acc.billingstate = data["payload"]["after"]["billingstate"]
-    acc.description = data["payload"]["after"]["description"]
-    acc.billinglatitude = data["payload"]["after"]["billinglatitude"]
-    acc.website = data["payload"]["after"]["website"]
-    acc.phone = data["payload"]["after"]["phone"]
-    acc.fax = data["payload"]["after"]["fax"]
-    acc.billingstreet = data["payload"]["after"]["billingstreet"]
-    acc.name = acc_name
-    acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
-    acc.external_id__c = acc_id
-    acc.save!
+    acc = Account.find_or_create_by(external_id__c: data["payload"]["after"]["external_id__c"])  
+ #   acc.billingcountry = data["payload"]["after"]["billingcountry"]
+ #   acc.accountsource = data["payload"]["after"]["accountsource"]
+ #   acc.billingpostalcode = data["payload"]["after"]["billingpostalcode"]
+ #   acc.billingcity = data["payload"]["after"]["billingcity"]
+ #   acc.billingstate = data["payload"]["after"]["billingstate"]
+ #   acc.description = data["payload"]["after"]["description"]
+ #   acc.billinglatitude = data["payload"]["after"]["billinglatitude"]
+ #   acc.website = data["payload"]["after"]["website"]
+ #   acc.phone = data["payload"]["after"]["phone"]
+ #   acc.fax = data["payload"]["after"]["fax"]
+ #   acc.billingstreet = data["payload"]["after"]["billingstreet"]
+ #    acc.name = acc_name
+ #   acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
+ #   acc.external_id__c = data["payload"]["after"]["external_id__c"]
+ #   acc.save!
     puts "************ saved account #{Account.find_by(external_id__c: acc_id).name} with id #{Account.find_by(external_id__c: acc_id).external_id__c}"
   end
 end
