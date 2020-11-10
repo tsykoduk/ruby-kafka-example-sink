@@ -53,7 +53,7 @@ consumer.each do |message|
     acc.phone = data["payload"]["after"]["phone"]
     acc.fax = data["payload"]["after"]["fax"]
     acc.billingstreet = data["payload"]["after"]["billingstreet"]
-    acc.name = data["payload"]["after"]["name"]
+    acc.name = acc_name
     acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
     acc.external_id__c = data["payload"]["after"]["external_id__c"]
     acc.save
