@@ -34,13 +34,11 @@ consumer.each do |message|
   data.to_h
   
   acc_name = data["payload"]["after"]["name"]
-  acc_id = data["payload"]["after"]["external_id__c"]
-
-  puts "Message received - processing record #{acc_name}"
-
-  if acc_id == ""
-    puts "skipping -- missing External ID for record #{acc_name}"
+  unless acc_id = data["payload"]["after"]["external_id__c"]
+    acc_id = nil
+    puts "skipping #{acc_name}"
   else
+    puts "Message received - processing record #{acc_name}, id #{acc_id}"
     acc = Account.find_or_create_by(external_id__c: acc_id)  
     acc.billingcountry = data["payload"]["after"]["billingcountry"]
     acc.accountsource = data["payload"]["after"]["accountsource"]
