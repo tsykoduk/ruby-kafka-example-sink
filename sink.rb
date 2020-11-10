@@ -43,7 +43,7 @@ consumer.each do |message|
     acc.billingcountry = data["payload"]["after"]["billingcountry"]
     acc.accountsource = data["payload"]["after"]["accountsource"]
     acc.billingpostalcode = data["payload"]["after"]["billingpostalcode"]
-    acc.billingcity = data["payload"]["after"]["billingpostalcode"]
+    acc.billingcity = data["payload"]["after"]["billingcity"]
     acc.billingstate = data["payload"]["after"]["billingstate"]
     acc.description = data["payload"]["after"]["description"]
     acc.billinglatitude = data["payload"]["after"]["billinglatitude"]
