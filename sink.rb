@@ -53,7 +53,7 @@ consumer.each do |message|
     acc.billingstreet = data["payload"]["after"]["billingstreet"]
     acc.name = acc_name
     acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
-    acc.external_id__c = data["payload"]["after"]["external_id__c"]
+    acc.external_id__c = acc_id
     acc.save!
     puts "saved account " + Account.find_by(external_id__c: acc_id).name
   end
