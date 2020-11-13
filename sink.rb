@@ -28,7 +28,7 @@ tmp_ssl_key.write(ENV.fetch('KAFKA_CLIENT_CERT_KEY'))
 tmp_ssl_key.close
 
 config = {
-  :"bootstrap.servers" => bootstrap_brokers,
+  :"bootstrap.servers" => kafka_brokers,
   :"group.id" => group_id,
   :"ssl.ca.location" => tmp_ca_file.path,
   :"ssl.certificate.location" => tmp_ssl_cert.path,
