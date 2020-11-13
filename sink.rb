@@ -65,6 +65,7 @@ consumer.each do |message|
       acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
       acc.external_id__c = data["payload"]["after"]["external_id__c"].to_s
       acc.save!
+      puts "************ updated account #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).name} with id #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).external_id__c}"
     else
       acc = Account.new
       acc.billingcountry = data["payload"]["after"]["billingcountry"]
@@ -82,8 +83,9 @@ consumer.each do |message|
       acc.billinglongitude = data["payload"]["after"]["billinglongitude"]
       acc.external_id__c = data["payload"]["after"]["external_id__c"].to_s
       acc.save!
+      puts "************ created new account #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).name} with id #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).external_id__c}"
     end
-    puts "************ saved account #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).name} with id #{Account.find_by(external_id__c: data["payload"]["after"]["external_id__c"]).external_id__c}"
+    
   end
 end
 
