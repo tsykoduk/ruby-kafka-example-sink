@@ -6,6 +6,17 @@ require File.expand_path(File.dirname(__FILE__) + "/config/environment")
 require 'rdkafka'
 require 'tempfile'
 
+kafka_brokers = ""
+kak_brok = ENV.fetch('KAFKA_URL').split(",")
+kaf_brok.each do k
+  a = URI.parse(k)
+  kafka_brokers << a.host + ":" + a.port.to_s + ","
+end
+kafka_brokers.delete_suffix!(",")
+
+account_topic = ENV.fetch('ACCOUNT_TOPIC_NAME')
+group_id = ENV.fetch("ACCOUNT_GROUP_ID")
+
 tmp_ca_file = Tempfile.new('ca_certs')
 tmp_ca_file.write(ENV.fetch('KAFKA_TRUSTED_CERT'))
 tmp_ca_file.close
@@ -17,8 +28,8 @@ tmp_ssl_key.write(ENV.fetch('KAFKA_CLIENT_CERT_KEY'))
 tmp_ssl_key.close
 
 config = {
-  :"bootstrap.servers" => "ec2-34-193-50-177.compute-1.amazonaws.com:9096,ec2-54-221-245-252.compute-1.amazonaws.com:9096,ec2-54-86-66-15.compute-1.amazonaws.com:9096",
-  :"group.id" => "ruby-test",
+  :"bootstrap.servers" => bootstrap_brokers,
+  :"group.id" => group_id,
   :"ssl.ca.location" => tmp_ca_file.path,
   :"ssl.certificate.location" => tmp_ssl_cert.path,
   :"ssl.key.location" => tmp_ssl_key.path,
@@ -27,7 +38,7 @@ config = {
 }
 
 consumer = Rdkafka::Config.new(config).consumer
-consumer.subscribe("independent_connector_7719.salesforce.account")
+consumer.subscribe("#{account_topic}")
 
 consumer.each do |message|
   data = JSON.parse(message.payload)
