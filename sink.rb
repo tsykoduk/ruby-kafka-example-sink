@@ -7,7 +7,7 @@ require 'rdkafka'
 require 'tempfile'
 
 kafka_brokers = ""
-kak_brok = ENV.fetch('KAFKA_URL').split(",")
+kaf_brok = ENV.fetch('KAFKA_URL').split(",")
 kaf_brok.each do k
   a = URI.parse(k)
   kafka_brokers << a.host + ":" + a.port.to_s + ","
