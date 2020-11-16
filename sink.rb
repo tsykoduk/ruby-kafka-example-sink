@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+#This script relys on an attached Kakfa addon. In addtion it needs the following env variables:
+#
+# * ACCOUNT_TOPIC_NAME = name of topic where the account updates are published
+# * ACCOUNT_GROUP_ID = some group id for said topic
+
 
 #Load the rails env
 ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
