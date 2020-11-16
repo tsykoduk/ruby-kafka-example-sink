@@ -62,6 +62,7 @@ consumer.each do |message|
   # I am sure that there is a more elegant method.
   #
   acc_name = data["payload"]["after"]["name"]
+  # do the work
   unless data["payload"]["after"]["external_id__c"]
     puts "skipping #{acc_name}"
   else
