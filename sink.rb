@@ -1,22 +1,25 @@
 #!/usr/bin/env ruby
 
+
+#Load the rails env
 ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
 require File.expand_path(File.dirname(__FILE__) + "/config/environment")
 
+#lets load some gems
 require 'rdkafka'
 require 'tempfile'
 
+#set up the enviroment
 kafka_brokers = ""
+#TODO: there has to be a better way to do this, but this works??
 kaf_brok = ENV.fetch('KAFKA_URL').split(",")
 kaf_brok.each do |k|
   a = URI.parse(k)
   kafka_brokers << a.host + ":" + a.port.to_s + ","
 end
 kafka_brokers.delete_suffix!(",")
-
 account_topic = ENV.fetch('ACCOUNT_TOPIC_NAME')
 group_id = ENV.fetch("ACCOUNT_GROUP_ID")
-
 tmp_ca_file = Tempfile.new('ca_certs')
 tmp_ca_file.write(ENV.fetch('KAFKA_TRUSTED_CERT'))
 tmp_ca_file.close
@@ -27,6 +30,7 @@ tmp_ssl_key = Tempfile.new('kakfa_cert_key')
 tmp_ssl_key.write(ENV.fetch('KAFKA_CLIENT_CERT_KEY'))
 tmp_ssl_key.close
 
+#Configure the kafka driver
 config = {
   :"bootstrap.servers" => kafka_brokers,
   :"group.id" => group_id,
@@ -37,13 +41,25 @@ config = {
  # :"debug" => "consumer,cgrp,topic,fetch,broker"
 }
 
+#start the kafka driver
 consumer = Rdkafka::Config.new(config).consumer
 consumer.subscribe("#{account_topic}")
 
+#Start a consumer
 consumer.each do |message|
+  
+  #pull in the message, transform it into a hash
   data = JSON.parse(message.payload)
   data.to_h
   
+  #TODO there is probally a better way to collapse the hash down, but this works
+  #Read in the record and
+  # 1 - if there is not an external_id__c skip it, as the account is still being generated
+  # 2- if there is an extneral__id_c see of the record exists, if it does update it, if not, insert it.
+  #
+  # The rails find_or_create caused Heroku Connect to barf on the records, so we are doing it this way. 
+  # I am sure that there is a more elegant method.
+  #
   acc_name = data["payload"]["after"]["name"]
   unless data["payload"]["after"]["external_id__c"]
     puts "skipping #{acc_name}"
