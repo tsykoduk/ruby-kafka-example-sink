@@ -1,24 +1,7 @@
-# README
+Example Ruby Based Kafka Sink
+#####
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This sink relies on Heroku Connect feeding account data into Kafka via the Heroku Streaming Data Connectors. It will pick up changes published into the stream, and create new records, or update existing records for Heroku Connect to pick up and sync into a Salesforce org.
 
-Things you may want to cover:
+The entire app is in `sink.rb` - and can be executed on a Heroku Dyno via `heroku ps:scale accountsync=1` after the app is deployed.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
