@@ -38,7 +38,8 @@ config = {
   :"ssl.certificate.location" => tmp_ssl_cert.path,
   :"ssl.key.location" => tmp_ssl_key.path,
   :"security.protocol" => "ssl"
- # :"debug" => "consumer,cgrp,topic,fetch,broker"
+  # If you want to see what's going on, just uncomment the below to turn on verbose logging
+  # :"debug" => "consumer,cgrp,topic,fetch,broker"
 }
 
 #start the kafka driver
